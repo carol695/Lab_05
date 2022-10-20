@@ -34,13 +34,43 @@ public class Servlet extends HttpServlet {
         } catch (FileNotFoundException FException) {
             resp.setStatus(HttpServletResponse.SC_FOUND);
             responseWriter.write("Item no encontrado");
-        }catch (NumberFormatException NException) {
+        } catch (NumberFormatException NException) {
             resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
             responseWriter.write("Solicitud invalida");
-        }catch (MalformedURLException MException) {
+        } catch (MalformedURLException MException) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             responseWriter.write("Error interno en el servidor");
-        }catch(Exception e){
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+            responseWriter.write("Invalido");
+
+
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Writer responseWriter = resp.getWriter();
+        try {
+            Optional<String> optId = Optional.ofNullable(req.getParameter("id"));
+            if (optId.isPresent()) {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                ArrayList<Todo> TodoT = new ArrayList<Todo>();
+                Todo elemento = Service.getTodo(Integer.parseInt(optId.get()));
+                TodoT.add(elemento);
+                responseWriter.write(Service.todosToHTMLTable(TodoT));
+                responseWriter.flush();
+            }
+        } catch (FileNotFoundException FException) {
+            resp.setStatus(HttpServletResponse.SC_FOUND);
+            responseWriter.write("Item no encontrado");
+        } catch (NumberFormatException NException) {
+            resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+            responseWriter.write("Solicitud invalida");
+        } catch (MalformedURLException MException) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            responseWriter.write("Error interno en el servidor");
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
             responseWriter.write("Invalido");
 
