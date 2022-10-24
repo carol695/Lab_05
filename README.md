@@ -55,7 +55,7 @@
        Versión HTTP: 1.1
        Ahora, solicite (GET) el recurso /html. ¿Qué se obtiene como resultado?
        
-       ![image](https://user-images.githubusercontent.com/63822072/197438334-ffa3a342-afe9-422a-b69f-c99960efdf2e.png)
+ ![image](https://user-images.githubusercontent.com/63822072/197438334-ffa3a342-afe9-422a-b69f-c99960efdf2e.png)
 
 ¡Muy bien!, ¡Acaba de usar del protocolo HTTP sin un navegador Web!. Cada vez que se usa un navegador, éste se conecta a un servidor HTTP, envía peticiones(del protocolo HTTP), espera el resultado de las mismas, y -si se trata de contenido HTML- lo interpreta y dibuja.
 
@@ -86,7 +86,7 @@ Utilice ahora el parámetro -v y con el parámetro -i:
 
 curl -v nos muestra el encabezado de la URL y las respuestas esperadas, en pocas palabras nos muestra toda la informacion del GET, la coneccion al puerto 80, la IP a la que se desea acceder y demas informacion, se usa cuando se tienen problemas o se desea validar informacion. El comando curl -i no nos muestra tanta informacion como el -v, alli se ve la hora, el tipo de archivo html, la version del HTTP y la longitud de coneccion.
 
-## PARTE I. - HACIENDO UNA APLICACIÓN WEB DINÁMICA A BAJONIVEL
+## PARTE II. - HACIENDO UNA APLICACIÓN WEB DINÁMICA A BAJONIVEL
 
 En este ejercicio, va a implementar una aplicación Web muy básica, haciendo uso de los elementos de más bajo nivel de Java-EE (Enterprise Edition), con el finde revisar los conceptos del protocolo HTTP. En este caso, se trata de un módulo de consulta de clientes Web que hace uso de una librería de acceso a datosdisponible en un repositorio Maven local.
 
@@ -106,4 +106,125 @@ En este ejercicio, va a implementar una aplicación Web muy básica, haciendo us
 4. Compile y ejecute la aplicación en el servidor embebido Tomcat, a través de Maven con:
 
 ![image](https://user-images.githubusercontent.com/63822072/197439470-fcfba6eb-953b-45bd-9889-c0686312d32b.png)
+
+5. Abra un navegador, y en la barra de direcciones ponga la URL con la cual se le enviarán peticiones al ‘SampleServlet’. Tenga en cuenta que la URL tendrácomo host ‘localhost’, como puerto, el configur ado en el pom.xml y el path debe ser el del Servlet. Debería obtener un mensaje de saludo.
+
+![image](https://user-images.githubusercontent.com/63822072/197439867-c0e2f102-35ea-4530-b4a4-94544bb4646f.png)
+
+6. Observe que el Servlet ‘SampleServlet’ acepta peticiones GET, y opcionalmente, lee el parámetro ‘name’. Ingrese la misma URL, pero ahora agregandoun parámetro GET (si no sabe como hacerlo, revise la documentación en http://www.w3schools.com/tags/ref_httpmethods.asp).
+
+![image](https://user-images.githubusercontent.com/63822072/197439941-b9626dbd-d9eb-4e8d-a872-d9f9ab2263f8.png)
+
+7. Busque el artefacto gson en el repositorio de maven y agregue la dependencia.
+
+![image](https://user-images.githubusercontent.com/63822072/197439988-845d404b-96c7-41c8-8b86-67fb9768157d.png)
+
+8. En el navegador revise la dirección https://jsonplaceholder.typicode.com/todos/1. Intente cambiando diferentes números al final del path de la url.
+
+![image](https://user-images.githubusercontent.com/63822072/197440045-dd7844da-66e9-444a-98b9-ceab613ed019.png)
+
+![image](https://user-images.githubusercontent.com/63822072/197440058-fd0cdafd-2f5a-4944-a72f-30f91e1ca082.png)
+
+![image](https://user-images.githubusercontent.com/63822072/197440081-760b49d7-905d-4252-973d-293d2411a35b.png)
+
+9. Basado en la respuesta que le da el servicio del punto anterior, cree la clase edu.eci.cvds.servlet.model.Todo con un constructor vacío y losmétodos getter y setter para las propiedades de los "To Dos" que se encuentran en la url indicada.
+
+![image](https://user-images.githubusercontent.com/63822072/197440204-cd2136d2-e930-4532-b9d0-12434fc1be62.png)
+
+10. Utilice la siguiente clase para consumir el servicio que se encuentra en la dirección url del punto anterior:
+
+![image](https://user-images.githubusercontent.com/63822072/197440245-a6a94bf0-f8db-4e48-b012-41d37dd04c79.png)
+
+13. Teniendo en cuenta las siguientes métodos disponibles en los objetos ServletRequest y ServletResponse recibidos por el método doGet:
+
+   response.setStatus(N); <- Indica con qué código de error N se generará la respuesta. Usar la clase HttpServletResponse para indicar el código der espuesta.
+   
+   request.getParameter(param); <- Consulta el parámetro recibido, asociado al nombre ‘param’.
+   
+   response.getWriter() <- Retorna un objeto PrintWriter a través del cual se le puede enviar la respuesta a quien hizo la petición.
+   
+   response.setContentType(T) <- Asigna el tipo de contenido (MIME type) que se entregará en la respuesta.Implemente dicho método de manera que:
+
+   Asuma que la petición HTTP recibe como parámetro el número de id de una lista de cosas por hacer (todo), y que dicha identific ación es unnúmero entero.
+   
+   Con el identificador recibido, consulte el item por hacer de la lista de cosas por hacer, usando la clase "Service" creada en el punto 10.
+   
+   ### Si el item existe:
+   Responder con el código HTTP que equivale a ‘OK’ (ver referencia anterior), y como contenido de dicha respuesta, el código htmlcorrespondiente a una página con una tabla que tenga los detalles del item, usando la clase "Service" creada en el punto 10 par crear la tabla.
+   
+   ### Si el item no existe:
+   
+   Responder con el código correspondiente a ‘no encontrado’, y con el código de una página html que indique que no existe un item con elidentific ador dado.
+   
+   Si no se paso parámetro opcional, o si el parámetro no contiene un número entero, devolver el código equivalente a requerimientoinválido.
+   
+   Si se genera la excepcion MalformedURLException devolver el código de error interno en el servidorPara cualquier otra excepcion, devolver el código equivalente a requerimiento inválido.
+   
+   ![image](https://user-images.githubusercontent.com/63822072/197440824-b35b8168-fd42-4a96-86d6-cb20dc5a446b.png)
+
+   14. Una vez hecho esto, verifique e l funcionamiento de la aplicación, recompile y ejecute la aplicación.
+   
+  ![image](https://user-images.githubusercontent.com/63822072/197440881-6ad88931-fb92-4132-8c84-f2db7d29bdaa.png)
+
+![image](https://user-images.githubusercontent.com/63822072/197440916-068609a5-6759-44e0-9449-b975fb8a7bb8.png)
+
+15. Intente hacer diferentes consultas desde un navegador Web para probar las diferentes funcionalidades.
+
+![image](https://user-images.githubusercontent.com/63822072/197440956-46146384-4f21-4527-9908-7d48e8d7761c.png)
+
+![image](https://user-images.githubusercontent.com/63822072/197440977-55cc48c4-2c85-4eae-801b-c89b71c79d4e.png)
+
+![image](https://user-images.githubusercontent.com/63822072/197440988-2d413711-33e9-4aad-b680-c37068b303f4.png)
+
+## PARTE III.
+
+16. En su servlet, sobreescriba el método doPost, y haga la misma implementación del doGet.
+
+![image](https://user-images.githubusercontent.com/63822072/197441168-f35255c2-1273-4e5a-8da8-2479c15fe38f.png)
+
+17. Cree el archivo index.html en el directorio src/main/webapp/index.html de la siguiente manera:
+
+![image](https://user-images.githubusercontent.com/63822072/197441189-e6a60159-0f48-4a44-9ba5-c55ffc6c977e.png)
+
+18. En la página anterior, cree un formulario que tenga un campo para ingresar un número (si no ha manejado html antes, revisehttp://www.w3schools.com/html/ ) y un botón. El formulario debe usar como método ‘POST’, y como acción, la ruta relativa del último servlet creado(es decir la URL pero excluyendo ‘http://localhost:8080/’).
+
+![image](https://user-images.githubusercontent.com/63822072/197441274-2e0a4cc5-6dfe-4541-9fd5-be0607bd4ac1.png)
+
+19. Revise este ejemplo de validación de formularios con javascript y agruéguelo a su formulario, de manera que -al momento de hacer ‘submit’- desde elbrowser se valide que el valor ingresado es un valor numérico.
+
+![image](https://user-images.githubusercontent.com/63822072/197441300-1d011296-320d-4156-b55d-4ecc6f2eec23.png)
+
+20. Recompile y ejecute la aplicación. Abra en su navegador en la página del formulario, y rectifique que la página hecha anteriormente sea mostrada.Ingrese los datos y verifique los resultados. Cambie el formulario para que ahora en lugar de POST, use el método GET . Qué diferencia observa?
+
+![image](https://user-images.githubusercontent.com/63822072/197441367-2e043893-7329-426a-a3df-d88362d016e2.png)
+
+![image](https://user-images.githubusercontent.com/63822072/197441379-1d5a087b-ac8b-41ad-bce4-328b7b4f2899.png)
+
+![image](https://user-images.githubusercontent.com/63822072/197441391-45ad20f1-aa6c-46a7-8abc-a99946e07836.png)
+
+![image](https://user-images.githubusercontent.com/63822072/197441400-b6fa6c65-d076-431e-acfd-9285002ab21a.png)
+
+![image](https://user-images.githubusercontent.com/63822072/197441410-2eb9b06f-769c-45b4-9cbb-7a07e4741e48.png)
+
+## PARTE IV. FRAMEWORKS WEB MVC – JAVA SERVER FACES /PRIME FACES
+
+En este ejercicio, usted va a desarrollar una aplicación Web basada en el marco JSF, y en una de sus implementaciones más usadas: PrimeFaces. Se trata de unjuego en línea para adivinar un número, en el que el ganador, si atina en la primera oportunidad, recibe $100.000. Luego, por cada intento fallido, el premiose reduce en $10.000
+
+1. Al proyecto Maven, debe agregarle las dependencias mas recientes de javax.javaee-api, com.sun.faces.jsf-api, com.sun.faces.jsf-impl,javax.servlet.jstl y Primefaces (en el archivo pom.xml).
+
+![image](https://user-images.githubusercontent.com/63822072/197441516-f7ba99c9-1d39-4531-887c-0d20daf1038f.png)
+
+2. Para que configur e automáticamente el descriptor de despliegue de la aplicación (archivo web.xml), de manera que el framework JSF se active al iniciode la aplicación, en el archivo web.xml agregue la siguiente configur ación:
+
+![image](https://user-images.githubusercontent.com/63822072/197441550-5f0dfed9-425f-4e98-92d1-b50c9b8d2a43.png)
+
+3. Revise cada una de las configur aciones agregadas anteriormente para saber qué hacen y por qué se necesitan. Elimine las que no se necesiten.
+
+
+
+
+
+
+
+
 
