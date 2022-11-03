@@ -246,11 +246,69 @@ En este ejercicio, usted va a desarrollar una aplicación Web basada en el marco
    * guess: Debe recibir un intento de adivinanza y realizar la lógica para saber si se adivinó, de tal forma que se ajuste el valor del premio y/o actualiceel estado del juego.
    * restart: Debe volver a iniciar el juego (inicializar de nuevo el número a adivinar, y restaurar el premio a su valor original).
 
+![image](https://user-images.githubusercontent.com/63822072/199776135-83d14381-e427-4b6c-bdb2-c8584ac55b9a.png)
+
+![image](https://user-images.githubusercontent.com/63822072/199776197-f89758e3-84d2-4128-b093-a857784c5ba0.png)
+
+![image](https://user-images.githubusercontent.com/63822072/199776244-aa40d4e3-2f38-4e07-a0b6-ef9560584db9.png)
+
+5. Cree una página XHTML, de nombre guess.xhtml (debe quedar en la ruta src/main/webapp). Revise en la página 13 del manual de PrimeFaces, quéespacios de nombres XML requiere una página de PrimeFaces y cuál es la estructura básica de la misma.
+
+![image](https://user-images.githubusercontent.com/63822072/199776575-475c8aff-688c-43c6-aa9c-8615258ec9cc.png)
 
 
+6. Con base en lo anterior, agregue un formulario con identific ador guess_form con el siguiente contenido básico:
+
+![image](https://user-images.githubusercontent.com/63822072/199776675-e5fa5ffc-87e5-4d10-a866-ee3986457456.png)
+
+![image](https://user-images.githubusercontent.com/63822072/199776793-710ccd7d-8f98-4ec9-896c-aeaeea4716d9.png)
 
 
+7. Al formulario, agregue:
+
+   a. Un elemento de tipo <p:outputLabel> para el número que se debe adivinar, sin embargo, este elemento se debe ocultar. Para ocultarlo, sepuede agregar el estilo display: none; al elemento. Una forma de hacerlo es por medio de la propiedad style.En una aplicacion real, no se debería tener este elemento, solo se crea con el fin de simplific ar una prueba futura.
+   
+   b. Un elemento <p:inputText> para que el usuario ingrese su número.
+   
+   c. Un elemento de tipo <p:outputLabel> para mostrar el número de intentos realizados.
+   
+   d. Un elemento de tipo <p:outputLabel> para mostrar el estado del juego.e. Un elemento de tipo <p:outputLabel> para mostrar en cuanto va el premio.Y asocie dichos elementos al BackingBean de sesión a través de su propiedad value, y usando como referencia el nombre asignado:
+
+![image](https://user-images.githubusercontent.com/63822072/199776996-4708ba56-1cc7-4c25-8990-136aa2b1c23b.png)
+
+![image](https://user-images.githubusercontent.com/63822072/199777124-60e7f5db-451d-4e1b-97a6-450bb5b7bfd9.png)
 
 
+8. Al formulario, agregue dos botones de tipo <p:commandButton>, uno para enviar el número ingresado y ver si se atinó, y otro para reiniciar el juego.
 
+a. El botón de envío de adivinanza debe tener asociado a su propiedad update el nombre del formulario en el que se agregaron los campos antesdescritos, de manera que al hacer clic, se ejecute un ciclo de JSF y se refresque la vista.
+
+b. Debe tener también una propiedad actionListener con la cual se le indicará que, al hacer clic, se ejecutará el método guess, creado en elbacking-bean de sesión:
+
+![image](https://user-images.githubusercontent.com/63822072/199777472-a83db825-a37e-4720-a406-33f8b86da33d.png)
+
+c. El botón de reiniciar juego tendrá las mismas propiedades de update y actionListener del otro con el valor correspondiente:
+
+![image](https://user-images.githubusercontent.com/63822072/199777526-a1177627-6912-4b70-b23f-2d5f11609af4.png)
+
+### Resultado 
+
+![image](https://user-images.githubusercontent.com/63822072/199777339-6468d9e2-bb5f-4b69-9fc3-0a5fe0e01e94.png)
+
+9. Para verific ar el funcionamiento de la aplicación, agregue el plugin tomcat-runner dentro de los plugins de la fase de construcción (build). Tenga encuenta que en la configur ación del plugin se indica bajo que ruta quedará la aplicación:
+
+a. mvn package
+b. mvn tomcat7:run
+
+Si no hay errores, la aplicación debería quedar accesible en la URL: http://localhost:8080/faces/guess.xhtml
+
+![image](https://user-images.githubusercontent.com/63822072/199778650-eaf03cb6-c352-40bf-88f0-44815eaee40e.png)
+
+
+10. Si todo funcionó correctamente, realice las siguientes pruebas:a. Abra la aplicación en un explorador. Realice algunas pruebas con el juego e intente adivinar el número.
+
+![image](https://user-images.githubusercontent.com/63822072/199778837-0daab1c9-8505-4f54-9e24-58e97760db60.png)
+
+
+![image](https://user-images.githubusercontent.com/63822072/199779359-41fad266-aca6-48f4-a338-311806672529.png)
 
