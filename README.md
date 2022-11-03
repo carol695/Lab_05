@@ -218,7 +218,35 @@ En este ejercicio, usted va a desarrollar una aplicación Web basada en el marco
 
 ![image](https://user-images.githubusercontent.com/63822072/197441550-5f0dfed9-425f-4e98-92d1-b50c9b8d2a43.png)
 
-3. Revise cada una de las configur aciones agregadas anteriormente para saber qué hacen y por qué se necesitan. Elimine las que no se necesiten.
+3. Revise cada una de las configuraciones agregadas anteriormente para saber qué hacen y por qué se necesitan. Elimine las que no se necesiten.
+
+4. Ahora, va a crear un Backing-Bean de sesión, el cual, para cada usuario, mantendrá de lado del servidor las siguientes propiedades:
+
+   a. El número que actualmente debe adivinar (debe ser un número aleatorio).
+   
+   b. El número de intentos realizados.
+   
+   c. El premio acumulado hasta el momento.
+   
+   d. El estado del juego, que sería una cadena de texto que indica si ya ganó o no, y si ganó de cuanto es el premio.
+   
+ Para hacer esto, cree una clase que tenga:
+ 
+   * el constructor por defecto (sin parámetros)
+   
+   * los métodos get/set necesarios dependiendo si las propiedades son de escritura o lectura
+   
+   * coloque las anotaciones:
+   
+         @ManagedBean, incluyendo el nombre: @ManagedBean(name = "guessBean").
+         
+         @ApplicationScoped.
+         
+   A la implementación de esta clase, agregue los siguientes métodos:
+   
+      guess: Debe recibir un intento de adivinanza y realizar la lógica para saber si se adivinó, de tal forma que se ajuste el valor del premio y/o actualiceel estado del juego.
+      
+      restart: Debe volver a iniciar el juego (inicializar de nuevo el número a adivinar, y restaurar el premio a su valor original).
 
 
 
