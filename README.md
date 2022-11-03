@@ -238,15 +238,13 @@ En este ejercicio, usted va a desarrollar una aplicación Web basada en el marco
    
    * coloque las anotaciones:
    
-         @ManagedBean, incluyendo el nombre: @ManagedBean(name = "guessBean").
-         
-         @ApplicationScoped.
+      * @ManagedBean, incluyendo el nombre: @ManagedBean(name = "guessBean").
+      * @ApplicationScoped.
          
    A la implementación de esta clase, agregue los siguientes métodos:
    
-      guess: Debe recibir un intento de adivinanza y realizar la lógica para saber si se adivinó, de tal forma que se ajuste el valor del premio y/o actualiceel estado del juego.
-      
-      restart: Debe volver a iniciar el juego (inicializar de nuevo el número a adivinar, y restaurar el premio a su valor original).
+   * guess: Debe recibir un intento de adivinanza y realizar la lógica para saber si se adivinó, de tal forma que se ajuste el valor del premio y/o actualiceel estado del juego.
+   * restart: Debe volver a iniciar el juego (inicializar de nuevo el número a adivinar, y restaurar el premio a su valor original).
 
 
 
